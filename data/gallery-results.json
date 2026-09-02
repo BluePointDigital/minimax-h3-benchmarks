@@ -285,7 +285,7 @@
       "shortName": "POV selected 768p",
       "group": "workflow-study",
       "groupLabel": "Seed Hunter & 10Eros workflow study",
-      "video": "/media/19-10eros-seed-hunter-camera-pov-fixed-independent-768x1344.mp4",
+      "video": "./media/19-10eros-seed-hunter-camera-pov-fixed-independent-768x1344.mp4",
       "attention": "Comfy-Kitchen attention in two-stage recipe",
       "recipe": "Camera-POV prompt · one 4-step preview · learned upscale · 4-step refine",
       "totalSeconds": 265.346,

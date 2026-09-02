@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A visual comparison of retained MiniMax H3 attention-backend and workflow tests on an RTX 5090."
+    />
+    <meta name="theme-color" content="#07101c" />
+    <title>MiniMax H3 Attention &amp; Workflow Comparison</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <script src="./assets/app.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"></div>
+    <main class="shell">
+      <nav class="site-nav" aria-label="Primary">
+        <a class="active" href="./index.html" aria-current="page">Video gallery</a>
+        <a href="./benchmarks.html">Benchmark data</a>
+        <a href="./methodology.html">Methodology &amp; agent guide</a>
+      </nav>
+      <header class="hero">
+        <div class="eyebrow-row">
+          <span class="pill pill-cyan">MiniMax H3</span>
+          <span class="pill">RTX 5090 · Prometheus</span>
+          <span class="pill">16 measured test cards</span>
+        </div>
+
+        <div class="hero-grid">
+          <div>
+            <p class="kicker">Controlled local inference record</p>
+            <h1>Attention backend &amp; workflow comparison</h1>
+            <p class="lede">
+              Every retained test video is paired with its timing, media contract,
+              seed, backend, and human-review outcome. Results are separated by
+              workload so a short compatibility canary is not presented as an
+              equivalent full-length speed result.
+            </p>
+            <a class="prompt-link" href="./canonical-prompt.txt">View the exact canonical prompt</a>
+          </div>
+
+          <dl class="summary">
+            <div><dt>Standard</dt><dd>10:11.4</dd></div>
+            <div><dt>Turbo</dt><dd>6:15.0</dd></div>
+            <div><dt>Fastest full path</dt><dd>4:03.5</dd></div>
+            <div><dt>Canonical seed</dt><dd>…0021180</dd></div>
+          </dl>
+        </div>
+      </header>
+
+      <div class="toolbar" aria-label="Comparison controls">
+        <div class="filters" role="group" aria-label="Filter results">
+          <button class="filter active" type="button" data-filter="all">All results</button>
+          <button class="filter" type="button" data-filter="canonical">Canonical shot</button>
+          <button class="filter" type="button" data-filter="workflow-study">Seed Hunter + 10Eros</button>
+          <button class="filter" type="button" data-filter="spot-check">Spot checks</button>
+        </div>
+        <label class="sort-label">
+          Sort
+          <select id="sort">
+            <option value="evidence">Evidence groups</option>
+            <option value="fastest">Fastest first</option>
+            <option value="slowest">Slowest first</option>
+          </select>
+        </label>
+      </div>
+
+      <div id="results" aria-live="polite"></div>
+
+      <footer>
+        <p>
+          Timings are observations from one local RTX 5090 system. Cached replay,
+          incompatible workloads, and recovered execution-only timings are disclosed
+          rather than silently mixed.
+        </p>
+        <p>
+          The notes summarize what was observed in each test. They are included
+          to help viewers interpret the footage, not to assign public rankings.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Sanitized MiniMax H3 benchmark timings, workload details, transcript checks, and runtime evidence."
+    />
+    <meta name="theme-color" content="#07101c" />
+    <title>MiniMax H3 Benchmark Data</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+    <script src="./assets/benchmark-page.js" defer></script>
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"></div>
+    <main class="shell">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="./index.html">Video gallery</a>
+        <a class="active" href="./benchmarks.html" aria-current="page">Benchmark data</a>
+        <a href="./methodology.html">Methodology &amp; agent guide</a>
+      </nav>
+
+      <header class="page-hero">
+        <div>
+          <p class="kicker">Sanitized evidence index</p>
+          <h1>Benchmark data</h1>
+          <p class="lede">
+            A human-readable overview and a filterable record of measured H3
+            executions. No source benchmark media, raw prompts, personal references,
+            provider identifiers, or absolute local paths are included.
+          </p>
+        </div>
+        <div class="download-row">
+          <a class="download primary" href="./data/gallery-results.json" download>Gallery metrics JSON</a>
+          <a class="download" href="./data/benchmark-records.json" download>Evidence JSON</a>
+          <a class="download" href="./data/benchmark-records.csv" download>Evidence CSV</a>
+        </div>
+      </header>
+
+      <section id="data-stats" class="data-stats" aria-label="Dataset summary"></section>
+
+      <section class="doc-section">
+        <div class="section-intro">
+          <p class="kicker">Fixed canonical shot</p>
+          <h2>Full-length highlights</h2>
+          <p>
+            These rows use the 768 × 1344, 15.084-second, 362-frame native-audio
+            fixture and canonical seed unless the recipe explicitly contains a
+            multi-seed preview stage.
+          </p>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table wide">
+            <thead>
+              <tr>
+                <th>Workflow</th>
+                <th>Total</th>
+                <th>Sampling</th>
+                <th>Recipe</th>
+                <th>Observation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Standard</strong></td>
+                <td class="number">611.380 s</td>
+                <td class="number muted-number">558.131 s</td>
+                <td>20 steps · SageAttention2 + FirstBlockCache Safe</td>
+                <td>Reference baseline for the canonical 15-second shot.</td>
+              </tr>
+              <tr>
+                <td><strong>PDD + Sage</strong></td>
+                <td class="number">375.042 s median</td>
+                <td class="number muted-number">323.581 s median</td>
+                <td>8 steps · PDD shifts 12/3 · SageAttention2</td>
+                <td>Two uncached runs; 1.63× the Standard throughput.</td>
+              </tr>
+              <tr>
+                <td><strong>Seed Hunter direct</strong></td>
+                <td class="number">285.765 s</td>
+                <td class="number muted-number">232.650 s</td>
+                <td>12-step low-resolution pass · 3D latent upscale · 4-step refine</td>
+                <td>2.14× Standard throughput; identical to the same selected-seed interactive output.</td>
+              </tr>
+              <tr>
+                <td><strong>10Eros beta4 author recipe</strong></td>
+                <td class="number">373.961 s</td>
+                <td class="number muted-number">319.065 s</td>
+                <td>8 steps · Comfy-Kitchen · Euler/simple · shifts 12/7</td>
+                <td>Exact dialogue; a camera-perspective inconsistency was observed.</td>
+              </tr>
+              <tr>
+                <td><strong>10Eros + Seed Hunter three-preview</strong></td>
+                <td class="number">328.394 s</td>
+                <td class="number muted-number">234.172 s</td>
+                <td>Three 4-step previews · 3D latent upscale · 4-step refine</td>
+                <td>1.86× Standard throughput; exact dialogue with a camera-perspective inconsistency.</td>
+              </tr>
+              <tr>
+                <td><strong>10Eros + Seed Hunter direct</strong></td>
+                <td class="number">243.521 s</td>
+                <td class="number muted-number">184.942 s</td>
+                <td>One 4-step preview · 3D latent upscale · 4-step refine</td>
+                <td>2.51× Standard throughput; exact dialogue with the same perspective caveat.</td>
+              </tr>
+              <tr>
+                <td><strong>10Eros + Seed Hunter camera-POV selected path</strong></td>
+                <td class="number">265.346 s warm</td>
+                <td class="number muted-number">208.832 s</td>
+                <td>Clarified prompt · one 4-step preview · 3D latent upscale · 4-step refine</td>
+                <td>2.30× Standard throughput; exact dialogue and no visible phone in the dense review.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="doc-grid-two">
+        <article class="doc-panel">
+          <p class="kicker">Repeated canaries</p>
+          <h2>Ten-run medians</h2>
+          <p>
+            Four-second compatibility workloads. They describe repeatability inside
+            each lane, not full-length relative quality.
+          </p>
+          <div id="ten-run-summary" class="summary-list"></div>
+        </article>
+        <article class="doc-panel">
+          <p class="kicker">Additional measurements</p>
+          <h2>Quality and memory</h2>
+          <div id="additional-measurements" class="measure-grid"></div>
+        </article>
+      </section>
+
+      <section class="doc-section">
+        <div class="section-intro">
+          <p class="kicker">Historical matched sets</p>
+          <h2>Documented results without public media</h2>
+          <p>
+            These values remain useful as data, but they belong to different
+            workloads and should only be compared within matching rows.
+          </p>
+        </div>
+        <div class="history-grid">
+          <article><h3>SageAttention2</h3><p>1344 × 768 · 15.084 s · 20 steps</p><strong>851.534 s</strong><span>808.815 s sampling</span></article>
+          <article><h3>Sage + FBC Safe</h3><p>1344 × 768 · 15.084 s · 20 steps</p><strong>647.308 s</strong><span>607.727 s sampling</span></article>
+          <article><h3>LightX2V 768p</h3><p>1344 × 768 · 15.084 s · 8 steps</p><strong>363.357 s</strong><span>322.094 s sampling</span></article>
+          <article><h3>SLA dense wrapper</h3><p>576 × 1024 · 15.084 s · Ref2VA</p><strong>351.201 s</strong><span>324.715 s sampling</span></article>
+          <article><h3>SLA 85% request</h3><p>576 × 1024 · 15.084 s · Ref2VA</p><strong>294.211 s</strong><span>270.284 s sampling</span></article>
+        </div>
+      </section>
+
+      <section class="doc-section explorer">
+        <div class="explorer-head">
+          <div class="section-intro">
+            <p class="kicker">Complete normalized index</p>
+            <h2>Explore every timing record</h2>
+            <p>
+              Cached replays are hidden by default. Search by workload, backend,
+              package, or source evidence locator.
+            </p>
+          </div>
+          <p id="privacy-count" class="privacy-count"></p>
+        </div>
+
+        <div class="data-controls">
+          <label class="search-field">
+            <span>Search records</span>
+            <input id="record-search" type="search" placeholder="Label, backend, package…" />
+          </label>
+          <label>
+            <span>Mode</span>
+            <select id="mode-filter">
+              <option value="all">All modes</option>
+              <option value="fl2va">FL2VA</option>
+              <option value="ref2va">Ref2VA</option>
+              <option value="unspecified">Unspecified</option>
+            </select>
+          </label>
+          <label>
+            <span>Category</span>
+            <select id="category-filter"><option value="all">All categories</option></select>
+          </label>
+          <label>
+            <span>Sort</span>
+            <select id="record-sort">
+              <option value="latest">Latest first</option>
+              <option value="fastest">Fastest first</option>
+              <option value="slowest">Slowest first</option>
+              <option value="label">Label A–Z</option>
+            </select>
+          </label>
+          <label class="check-field">
+            <input id="include-cached" type="checkbox" />
+            <span>Include cached replay</span>
+          </label>
+        </div>
+
+        <div class="record-meta">
+          <span id="record-count">Loading records…</span>
+          <span id="snapshot-time"></span>
+        </div>
+
+        <div class="table-wrap">
+          <table class="data-table records-table">
+            <thead>
+              <tr>
+                <th>Record</th>
+                <th>Lane</th>
+                <th>Workload</th>
+                <th>Total</th>
+                <th>Sampling</th>
+                <th>Backend / package</th>
+                <th>Evidence locator</th>
+              </tr>
+            </thead>
+            <tbody id="records-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <footer>
+        <p id="inventory-note"></p>
+        <p>
+          Timing alone is not a quality claim. Read the methodology before comparing
+          rows with different dimensions, durations, modes, steps, schedulers,
+          references, or runtime fingerprints.
+        </p>
+      </footer>
+    </main>
+  </body>
+</html>

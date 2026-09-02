@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Methodology and machine-readable reuse guide for the MiniMax H3 benchmark dataset."
+    />
+    <meta name="theme-color" content="#07101c" />
+    <title>MiniMax H3 Benchmark Methodology</title>
+    <link rel="stylesheet" href="./assets/styles.css" />
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"></div>
+    <main class="shell docs-shell">
+      <nav class="site-nav" aria-label="Primary">
+        <a href="./index.html">Video gallery</a>
+        <a href="./benchmarks.html">Benchmark data</a>
+        <a class="active" href="./methodology.html" aria-current="page">Methodology &amp; agent guide</a>
+      </nav>
+
+      <header class="page-hero single">
+        <div>
+          <p class="kicker">Reading and reuse guide</p>
+          <h1>Methodology for humans and agents</h1>
+          <p class="lede">
+            This site preserves useful measurements without turning unlike workloads
+            into a single leaderboard. The gallery shows footage, the benchmark index
+            exposes sanitized records, and this page explains how to interpret both.
+          </p>
+        </div>
+      </header>
+
+      <section class="principles-grid">
+        <article>
+          <span>01</span>
+          <h2>Observed media</h2>
+          <p>A valid MP4 proves that a graph executed and produced decodable media. It does not establish visual quality or relative speed.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Matched comparison</h2>
+          <p>A speed ratio is meaningful only when the complete workload and runtime identity match closely enough to isolate the changed component.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>Human review</h2>
+          <p>Transcript, motion, identity, lip synchronization, and artifact review remain separate from timing and media compatibility.</p>
+        </article>
+      </section>
+
+      <section class="method-section split">
+        <div class="section-intro">
+          <p class="kicker">Comparison contract</p>
+          <h2>Match the workload before computing a speedup</h2>
+          <p>If any material field differs, describe the row as directional or compatibility evidence rather than a direct performance comparison.</p>
+        </div>
+        <ol class="contract-list">
+          <li><span>1</span>Generation mode: FL2VA, Ref2VA, or another graph family</li>
+          <li><span>2</span>GPU, runtime fingerprint, model/checkpoint, and workflow revision</li>
+          <li><span>3</span>Width, height, duration, frame count, and frame rate</li>
+          <li><span>4</span>Step count, sampler, scheduler, sigma shifts, and denoise path</li>
+          <li><span>5</span>Attention backend, cache configuration, accelerator, and LoRA stack</li>
+          <li><span>6</span>Seed, prompts, references, native-audio contract, and model residency</li>
+        </ol>
+      </section>
+
+      <section class="method-section">
+        <div class="section-intro">
+          <p class="kicker">Evidence levels</p>
+          <h2>What each record can support</h2>
+        </div>
+        <div class="evidence-grid">
+          <article><h3>1 · Controlled run</h3><p>Matched inputs, real sampler evidence, exact runtime identity, valid output, and human review. Suitable for a bounded performance conclusion.</p></article>
+          <article><h3>2 · Execution record</h3><p>Real timing and valid media, but one or more comparison fields differ. Useful for compatibility and profiling.</p></article>
+          <article><h3>3 · Recovered or partial record</h3><p>A source preserves only total time, media, or selected fields. Useful as historical evidence with limitations stated.</p></article>
+          <article><h3>4 · Cached replay</h3><p>The graph reused prior node outputs. Useful for cache-behavior diagnosis, never as generation speed evidence.</p></article>
+        </div>
+      </section>
+
+      <section class="method-section">
+        <div class="section-intro">
+          <p class="kicker">Public schema</p>
+          <h2>Data dictionary</h2>
+        </div>
+        <div class="table-wrap">
+          <table class="data-table dictionary-table">
+            <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td class="number">elapsedSeconds</td><td>Observed end-to-end or execution time recorded by the source.</td></tr>
+              <tr><td class="number">samplingSeconds</td><td>Sampler-node time when separately measured; null means unavailable.</td></tr>
+              <tr><td class="number">requested</td><td>The intended dimensions, duration, fps, steps, and native-audio setting.</td></tr>
+              <tr><td class="number">media</td><td>Observed output probe: dimensions, duration, frames, codecs, and validity.</td></tr>
+              <tr><td class="number">likelyCachedReplay</td><td>Derived replay warning. Exclude these rows from speed rankings.</td></tr>
+              <tr><td class="number">samplerWasCached</td><td>Explicit source assertion only; null means the source did not say.</td></tr>
+              <tr><td class="number">workflow</td><td>Revision, package, backend, cache, sampler, and scheduler when recorded.</td></tr>
+              <tr><td class="number">source.file</td><td>Relative locator back to the evidence record; no absolute path is exposed.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="method-section agent-grid">
+        <article class="doc-panel">
+          <p class="kicker">Agent reuse protocol</p>
+          <h2>Seven rules for automated analysis</h2>
+          <ol class="agent-list">
+            <li>Load the JSON file and preserve its schema version.</li>
+            <li>Exclude rows where <code>likelyCachedReplay</code> is true.</li>
+            <li>Group by the complete comparison contract, not just backend name.</li>
+            <li>Use sampling time for kernel changes and total time for user-facing latency.</li>
+            <li>Keep null fields unknown; never fill them from a neighboring record.</li>
+            <li>Cite <code>source.file</code> when reporting a measurement.</li>
+            <li>Pair timing conclusions with transcript, media, and human-review evidence.</li>
+          </ol>
+          <div class="download-row">
+            <a class="download primary" href="./data/benchmark-records.json" download>Download JSON</a>
+            <a class="download" href="./data/benchmark-records.csv" download>Download CSV</a>
+          </div>
+        </article>
+
+        <article class="code-panel">
+          <div>Example filter</div>
+          <pre><code>const data = await fetch("./data/benchmark-records.json")
+  .then(response =&gt; response.json());
+
+const comparable = data.records.filter(record =&gt;
+  !record.likelyCachedReplay &amp;&amp;
+  record.mode === "fl2va" &amp;&amp;
+  record.requested.width === 768 &amp;&amp;
+  record.requested.height === 1344 &amp;&amp;
+  record.requested.durationSeconds === 15 &amp;&amp;
+  record.requested.fps === 24
+);
+
+// Also match steps, sampler, scheduler, model,
+// references, audio, runtime, and residency.</code></pre>
+        </article>
+      </section>
+
+      <section class="privacy-panel">
+        <p class="kicker">Privacy boundary</p>
+        <h2>Statistics only</h2>
+        <p>
+          The public dataset contains no source benchmark media, raw prompts,
+          personal-reference records, provider job IDs, or absolute filesystem paths.
+          The gallery media remains a separately curated set.
+        </p>
+      </section>
+
+      <footer>
+        <p>Machine-readable data is available in both JSON and flat CSV formats.</p>
+        <p>Null values mean “not recorded,” never “zero” and never “same as another row.”</p>
+      </footer>
+    </main>
+  </body>
+</html>

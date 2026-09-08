@@ -10,7 +10,7 @@
     <meta name="theme-color" content="#07101c" />
     <title>MiniMax H3 Attention &amp; Workflow Comparison</title>
     <link rel="stylesheet" href="./assets/styles.css" />
-    <script src="./assets/app.js?v=20260902-2" defer></script>
+    <script src="./assets/app.js?v=20260907-1" defer></script>
   </head>
   <body>
     <div class="ambient" aria-hidden="true"></div>
@@ -24,7 +24,7 @@
         <div class="eyebrow-row">
           <span class="pill pill-cyan">MiniMax H3</span>
           <span class="pill">RTX 5090 · Prometheus</span>
-          <span class="pill">16 measured test cards</span>
+          <span class="pill">31 measured test cards</span>
         </div>
 
         <div class="hero-grid">
@@ -38,12 +38,14 @@
               equivalent full-length speed result.
             </p>
             <a class="prompt-link" href="./canonical-prompt.txt">View the exact canonical prompt</a>
+            <p class="lede">Updated September 7, 2026: 15 distinct configurations added. VDN was 5.04% faster in the corrected-POV pair, but operator review preferred PDD for quality and coherence. PDD + Sage remains the current workflow.</p>
+            <a class="prompt-link" href="./camera-pov-prompt.txt">View the corrected camera-POV prompt used for VDN</a>
           </div>
 
           <dl class="summary">
             <div><dt>Standard</dt><dd>10:11.4</dd></div>
             <div><dt>Turbo</dt><dd>6:15.0</dd></div>
-            <div><dt>Fastest full path</dt><dd>4:03.5</dd></div>
+            <div><dt>Historical fast path</dt><dd>4:03.5</dd></div>
             <div><dt>Canonical seed</dt><dd>…0021180</dd></div>
           </dl>
         </div>
@@ -52,6 +54,7 @@
       <div class="toolbar" aria-label="Comparison controls">
         <div class="filters" role="group" aria-label="Filter results">
           <button class="filter active" type="button" data-filter="all">All results</button>
+          <button class="filter" type="button" data-filter="post-launch">September additions</button>
           <button class="filter" type="button" data-filter="canonical">Canonical shot</button>
           <button class="filter" type="button" data-filter="workflow-study">Seed Hunter + 10Eros</button>
           <button class="filter" type="button" data-filter="spot-check">Spot checks</button>

@@ -215,6 +215,21 @@ function bindControls() {
   });
 }
 
+fetch("./data/gallery-results.json?v=20260907-1")
+  .then((response) => {
+    if (!response.ok) throw new Error(`Gallery request failed with ${response.status}`);
+    return response.json();
+  })
+  .then((data) => {
+    document.querySelector("#configuration-updates").innerHTML = data.results
+      .filter((result) => result.group === "post-launch")
+      .map((result) => `<tr><td><a href="./index.html#${escapeHtml(result.id)}">${escapeHtml(result.title)}</a></td><td>${escapeHtml(formatSeconds(result.totalSeconds))}</td><td>${escapeHtml(result.recipe)}</td><td>${escapeHtml(result.quality)}</td></tr>`)
+      .join("");
+  })
+  .catch(() => {
+    document.querySelector("#configuration-updates").innerHTML = '<tr><td colspan="4">New configuration data could not be loaded. Open the video gallery or download its metrics JSON.</td></tr>';
+  });
+
 fetch("./data/benchmark-records.json")
   .then((response) => {
     if (!response.ok) throw new Error(`Dataset request failed with ${response.status}`);

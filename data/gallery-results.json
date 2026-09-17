@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "cardCount": 24,
-  "mediaFileCount": 24,
+  "cardCount": 26,
+  "mediaFileCount": 26,
   "results": [
     {
       "id": "canonical-standard",
@@ -699,6 +699,56 @@
       "quality": "All full arms executed, but the added Ref8 adapter gave no meaningful speedup. Sampled likeness and broad shot sequence retained; fast-pan warping, physics, all-frame identity and lip sync still need playback review. No quality promotion.",
       "comparisonNote": "Frozen full video/voice reference and canonical seed. Baseline 512.001 s; shift-only 508.861 s; added adapter 513.050 s. These are three distinct configurations, not reruns. This progressive schedule is separate from the old Seed Hunter 4+4 refinement graph.",
       "evidence": "10Eros Ref8 evaluation · 2026-09-05 · 10eros-plus-ref8-a3-01"
+    },
+    {
+      "id": "fasth3-v2-vsa10",
+      "title": "FastH3 8-Step V2 · VSA 10% retained",
+      "shortName": "FastH3 V2 · VSA 10%",
+      "group": "post-launch",
+      "groupLabel": "September configuration studies",
+      "video": "./media/fasth3-v2-vsa10.mp4",
+      "attention": "FastVideo VSA · 3D video-cube block sparsity · 10% retained",
+      "recipe": "T2VA · FastH3 8-Step V2 pruned INT8 ConvRot · 8 steps res_multistep/simple · shifts 10/3 · dense fallback inside the early sampling window",
+      "totalSeconds": 239.042,
+      "totalLabel": "End-to-end",
+      "samplingSeconds": 184.978,
+      "speedup": "1.57× Current Turbo time · rejected on quality",
+      "resolution": "768 × 1344",
+      "duration": "15.084 s",
+      "frames": 362,
+      "fps": 24,
+      "steps": "8",
+      "seed": "81390012120021180",
+      "audio": "AAC stereo · 32 kHz",
+      "transcript": "Not transcribed for this pair; the operator reviewed both clips in playback.",
+      "quality": "Operator review: valid and quite good overall, but slightly plasticky on skin and clearly below the Turbo clip shown for comparison — the 10Eros hybrid Turbo package. Fast motion looked slightly better than that Turbo clip. Rejected for the model menu; V2 is text-to-audio-video only, so it cannot replace either the FL2VA or the Ref2VA Turbo package.",
+      "comparisonNote": "Identical canonical prompt, seed, dimensions, duration and native-audio contract; the paired 20% card differs only in the VSA keep percentage, and the two dispatched graphs are byte-identical apart from that one value. Sparse dispatch was verified at 109,651 tokens with no cached sampler. Timing is cross-runtime: this ran on the isolated ComfyUI 0.36.0 research lab, while the Current Turbo card comes from the 0.34 production runtime, so the ratio is a recipe-level comparison rather than a same-runtime claim.",
+      "evidence": "FastH3 V2 evaluation · 2026-09-17 · h3-fasth3-v2-vsa10"
+    },
+    {
+      "id": "fasth3-v2-vsa20",
+      "title": "FastH3 8-Step V2 · VSA 20% retained",
+      "shortName": "FastH3 V2 · VSA 20%",
+      "group": "post-launch",
+      "groupLabel": "September configuration studies",
+      "video": "./media/fasth3-v2-vsa20.mp4",
+      "attention": "FastVideo VSA · 3D video-cube block sparsity · 20% retained",
+      "recipe": "T2VA · FastH3 8-Step V2 pruned INT8 ConvRot · 8 steps res_multistep/simple · shifts 10/3 · dense fallback inside the early sampling window",
+      "totalSeconds": 263.309,
+      "totalLabel": "End-to-end",
+      "samplingSeconds": 210.472,
+      "speedup": "1.42× Current Turbo time · rejected on quality",
+      "resolution": "768 × 1344",
+      "duration": "15.084 s",
+      "frames": 362,
+      "fps": 24,
+      "steps": "8",
+      "seed": "81390012120021180",
+      "audio": "AAC stereo · 32 kHz",
+      "transcript": "Not transcribed for this pair; the operator reviewed both clips in playback.",
+      "quality": "Operator review: the same plasticky skin as the 10% variant, so the extra retention did not fix the checkpoint appearance, and still clearly below the 10Eros hybrid Turbo clip used for comparison. Fast motion looked slightly better. Rejected alongside the 10% card; no menu change.",
+      "comparisonNote": "This is the retention level implied by the V2 model card (80% sparsity), while the official ComfyUI template sets 10%; both were measured rather than silently reconciled. The paired graphs differ only by that value. Raising retention cost about 25 s of sampling and did not address the appearance issue, which points at the distilled checkpoint rather than the sparsity setting. Same cross-runtime timing caveat as the 10% card.",
+      "evidence": "FastH3 V2 evaluation · 2026-09-17 · h3-fasth3-v2-vsa20"
     }
   ]
 }

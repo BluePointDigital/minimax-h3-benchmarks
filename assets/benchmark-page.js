@@ -215,7 +215,7 @@ function bindControls() {
   });
 }
 
-fetch("./data/gallery-results.json?v=20260917-1")
+fetch("./data/gallery-results.json?v=20260917-2")
   .then((response) => {
     if (!response.ok) throw new Error(`Gallery request failed with ${response.status}`);
     return response.json();
